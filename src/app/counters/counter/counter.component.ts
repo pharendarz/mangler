@@ -1,6 +1,8 @@
 import {ActivatedRoute, Params} from '@angular/router';
-import {Component, Input, NgModule, OnInit} from '@angular/core';
+import {Component, DoCheck, Input, NgModule, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {CounterModel} from '../../../shared/counter.model';
+import {RelapsesListService} from '../../relapses/relapses-list.service';
+import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-counter',
@@ -8,21 +10,24 @@ import {CounterModel} from '../../../shared/counter.model';
   styleUrls: ['./counter.component.css']
 })
 
-export class CounterComponent implements OnInit {
-  id: any;
-  counter: CounterModel;
-  @Input() index: number;
+export class CounterComponent implements OnInit, OnChanges, DoCheck {
+  @Input() counter: CounterModel;
+  @Input() counterIndex: number;
+  // icons
+  faCheckSquare = faCheckSquare;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private relapsesListServices: RelapsesListService) { }
 
   ngOnInit() {
-    // this.route.params.subscribe(
-    //   (params: Params) => {
-    //     console.log('init relapse');
-    //     this.id = params['id'];
-    //     console.log(this.id, params);
-    //   }
-    // );
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('COUNTER CHANGED', changes, 'index:::', this.counterIndex);
+  }
+  ngDoCheck(): void {
+    console.log('hey man');
   }
 
+  onClickCounterItem() {
+    this.relapsesListServices.blockAddRelapseButton(this.counterIndex);
+  }
 }

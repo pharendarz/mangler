@@ -1,7 +1,14 @@
 <a
   class="list-group-item"
-  *ngFor="let relapseItem of relapseItems"
+  *ngFor="let relapse of relapseItems; let i = index"
 >
-  {{relapseItem.reason}}
+   [child-id: {{i}}] / [parent-id: {{relapse.relapseId}}]
+    {{relapse.date}}
+  <hr>
+  [input :] {{relapse.reason}}
+  <button
+    class="btn btn-dark"
+    (click)="onDeleteRelapseItem(relapse.relapseId, i)"
+  >X</button>
 </a>
 <!--  *ngFor="let rel of relapses"-->

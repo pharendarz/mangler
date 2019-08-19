@@ -2,11 +2,20 @@
 <div class="row">
   <div class="col-md-6">
     <ul class="list-group">
-      <button class="btn btn-warning" (click)="onAddNewCounter()">New counter</button>
+      <button
+        class="btn btn-warning"
+        (click)="onAddNewCounter()"
+      >New parent</button>
+<!--      <button-->
+<!--        class="btn btn-success"-->
+<!--        (click)="onAddNewRelapse()"-->
+<!--      >New child</button>-->
       <app-counter
         *ngFor="let counter of counters; let i = index"
-        [index]="i"
+        [counterIndex]="i"
+        [counter]="counter"
       >
+<!--        (click)="onClickShowRelapses()"-->
     <!--    [counter]="counter"-->
     <!--    <button class="btn btn-secondary">+</button> {{counter.name}} {{counter.date}} relapses(n)-->
       </app-counter>
@@ -14,6 +23,7 @@
   </div>
 
   <div class="col-md-6">
+    <!-- // relapses below-->
     <router-outlet></router-outlet>
   </div>
 </div>

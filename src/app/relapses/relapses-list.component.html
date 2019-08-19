@@ -1,10 +1,38 @@
 <hr>
-<br>
-<br>
+
+<button
+  class="btn btn-success"
+  (click)="onAddNewRelapse()"
+  [disabled]="blockAddRelapse"
+>
+  New child
+</button>
+
+<hr>
 <div class="relapses-container">
   <ul class="list-group">
-    {{relapse.relapseId}}
-    <app-relapse-item></app-relapse-item>
+    <div *ngIf="relapse; else noRelapse">
+      title counter id: {{relapse.counterId}}
+      <button
+        (click)="onAddNewRelapseItem()"
+        class="btn btn-danger"
+      >add line</button>
+      <button
+        class="btn btn-dark"
+        (click)="onDeleteElement()"
+      >delete element</button>
+      <!--      // container inputs-->
+      <app-relapse-input
+        (relapseReasonFilled)="onRelapseReasonFilled($event)"
+      ></app-relapse-input>
+      <!--      // relapse items-->
+      <app-relapse-item
+        [relapseItems]="relapse.items"
+      ></app-relapse-item>
+    </div>
   </ul>
 </div>
 <hr>
+<ng-template #noRelapse>
+  <h5>add child list first!</h5>
+</ng-template>

@@ -2,9 +2,13 @@
   style="cursor: pointer; text-decoration: none"
   routerLinkActive="active"
   class="list-group-item"
-  [routerLink]="index"
+  [routerLink]="counterIndex"
+  (click)="onClickCounterItem()"
 >
 <!--router link is for [:id] !!! -->
-<!--  <button class="btn btn-secondary">+</button> [{{index}}]{{counter.name}} {{counter.date}} relapses(n)-->
-  <button class="btn btn-secondary">+</button> [{{index}}] relapses(n)
+<!--  <i class="fas fa-check-square"></i>-->
+  [{{counterIndex}}] Parent
+  <div *ngIf="counter.relapseExist">
+    Child: [<fa-icon [icon]="faCheckSquare" style="color: indianred"></fa-icon> {{counter.relapseCounter}}]
+  </div>
 </a>

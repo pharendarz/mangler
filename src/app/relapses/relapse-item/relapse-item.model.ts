@@ -1,3 +1,3 @@
 export class RelapseItem {
-  constructor(public date: Date, public reason: string, private poolRef: number = 59 ) {}
+  constructor(public relapseId: number, public date: string, public reason: string, private poolRef: number = 59 ) {}
 }
