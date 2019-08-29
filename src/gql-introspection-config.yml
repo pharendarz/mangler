@@ -1,0 +1,6 @@
+schema: https://mdh-graphql-dev.risk.dev.dbgcloud.io/graphql
+overwrite: true
+generates:
+  ./src/gql-schema.json:
+    plugins:
+      - introspection

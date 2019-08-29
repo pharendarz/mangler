@@ -1,0 +1,6 @@
+query allProfilesQuery {
+    profiles {
+        profileId
+        name
+    }
+}

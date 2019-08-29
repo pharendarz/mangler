@@ -1,0 +1,12 @@
+query allProductsQuery($date: Date!) {
+    productTypes(businessDate: $date) {
+        line
+        products(first: 99) {
+            edges {
+                node {
+                    productId
+                }
+            }
+        }
+    }
+}

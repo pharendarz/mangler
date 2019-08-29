@@ -1,0 +1,26 @@
+{
+    "schemaPath": "schema.graphql",
+    "extensions": {
+        "endpoints": {
+            "Default Introspection Endpoint": {
+                "url": "https://mdh-graphql-dev.risk.dev.dbgcloud.io/graphql",
+                "introspect": true,
+                "headers": {
+                    "user-agent": "JS GraphQL"
+                }
+            },
+            "MDH dev": {
+                "url": "https://mdh-graphql-dev.risk.dev.dbgcloud.io/graphql",
+                "headers": {
+                    "user-agent": "JS GraphQL"
+                }
+            },
+            "localhost:8081": {
+                "url": "http://localhost:8081/",
+                "headers": {
+                    "user-agent": "JS GraphQL"
+                }
+            }
+        }
+    }
+}

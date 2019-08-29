@@ -1,0 +1,5 @@
+query productsQuery($date: Date!, $productLine: ProductLine!, $productType: String!) {
+    productsForType(businessDate: $date, productLine: $productLine, productType: $productType) {
+        productId
+    }
+}
