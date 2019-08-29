@@ -14,8 +14,22 @@ import { RelapseInputComponent } from './relapses/relapse-input/relapse-input.co
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { MyFirstGraphComponent } from './my-graph/my-first-graph/my-first-graph.component';
+// dbg
+import {ErrorModule} from '@dbg-riskit/angular-error';
+import {BusinessDateService} from '../shared/business.date.service';
+import { HeaderComponent } from './header/header.component';
+import { RxjsManglingComponent } from './rxjs-mangling/rxjs-mangling.component';
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FontAwesomeModule,
+    GraphQLModule,
+    HttpClientModule,
+    ErrorModule
+  ],
   declarations: [
     AppComponent,
     CounterListComponent,
@@ -24,15 +38,11 @@ import { HttpClientModule } from '@angular/common/http';
     CounterStartComponent,
     RelapseItemComponent,
     RelapseInputComponent,
+    MyFirstGraphComponent,
+    HeaderComponent,
+    RxjsManglingComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FontAwesomeModule,
-    GraphQLModule,
-    HttpClientModule
-  ],
-  providers: [CounterListService, RelapsesListService],
+  providers: [CounterListService, RelapsesListService, BusinessDateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

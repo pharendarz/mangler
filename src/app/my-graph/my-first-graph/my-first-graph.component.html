@@ -1,0 +1,16 @@
+<div *ngIf="loading">
+  Loading...
+</div>
+<div *ngIf="error">
+  Error :(
+</div>
+<div *ngIf="profiles">
+  <div *ngFor="let profile of profiles; let i = index">
+    <p>profile: {{profile.profileId}} / {{profile.name}}</p>
+  </div>
+</div>
+<div *ngIf="products">
+  <div *ngFor="let product of products; let i = index">
+    <p>product: {{product.id}} / {{product.product_line}}</p>
+  </div>
+</div>

@@ -1,0 +1,120 @@
+<div class="row">
+  <div class="col-md-6">
+    <button class="btn btn-warning" (click)="wipePrintoutExec()">Wipe toggle</button>
+  </div>
+</div>
+<p>BASICS</p>
+<div class="row">
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="createObservableExec()">Create</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="scanObservableExec()">Scan</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="observableFromAnythingExec()">OF</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="mapObservableExec()">MAP</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="switchMapObservableExec()">SwitchMap</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="takeUntilObservableExec()">takeUntil</button>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="firstObservableExec()">first</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="takeWhileObservableExec()">takeWhile</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="filterObservableExec()">filter</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="zipObservableExec()">zip</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="catchObservableExec()">catch Error</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="retryObservableExec()">retry when error</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="startWithObservableExec()">startWith</button>
+  </div>
+<!--  <div class="col-md-2">-->
+<!--    <button class="btn btn-danger" (click)="takeWhileObservableExec()">takeWhile</button>-->
+<!--  </div>-->
+<!--  <div class="col-md-2">-->
+<!--    <button class="btn btn-danger" (click)="filterObservableExec()">filter</button>-->
+<!--  </div>-->
+<!--  <div class="col-md-2">-->
+<!--    <button class="btn btn-danger" (click)="zipObservableExec()">zip</button>-->
+<!--  </div>-->
+<!--  <div class="col-md-2">-->
+<!--    <button class="btn btn-danger" (click)="catchObservableExec()">catch Error</button>-->
+<!--  </div>-->
+<!--  <div class="col-md-2">-->
+<!--    <button class="btn btn-danger" (click)="retryObservableExec()">retry when error</button>-->
+<!--  </div>-->
+</div>
+<p>EVENTS</p>
+<div class="row">
+  <div class="col-md-2">
+    <button class="btn btn-success" (click)="observableFromEventMouseClickExec()">Mouse Click</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-success" (click)="observableFromEventMouseMoveThrottleExec()">Mouse Move Throttle</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-success" (click)="observableFromEventMouseMoveDebouncedExec()">Mouse Move Debounced</button>
+  </div>
+</div>
+<p>ASYNC</p>
+<div class="row">
+  <div class="col-md-2">
+    <button class="btn btn-info" (click)="observableFromPromiseExec()">From Promise</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-info" (click)="observableFromTimerExec()">From Timer</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-info" (click)="observableFromIntervalExec()">Interval</button>
+  </div>
+</div>
+<p>MIXINS with GRAPHQL (pipe)- DBS COVER scenarios</p>
+<div class="row">
+  <div class="col-md-3">
+    <button class="btn btn-dark" (click)="observableFromPromiseExec()">Mulitiple map in pipe</button>
+  </div>
+  <div class="col-md-3">
+    <button class="btn btn-dark" (click)="observableFromPromiseExec()">MergeMap + multiple maps</button>
+  </div>
+  <div class="col-md-3">
+    <button class="btn btn-dark" (click)="observableFromPromiseExec()">asyncMergeMap + multiple asyncMaps</button>
+  </div>
+  <div class="col-md-3">
+    <button class="btn btn-dark" (click)="observableFromPromiseExec()">chains + pipe-childrens</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <button class="btn btn-dark" (click)="observableFromPromiseExec()">shareReplay operator + graphQl</button>
+  </div>
+<!--  <div class="col-md-3">-->
+<!--    <button class="btn btn-dark" (click)="observableFromPromiseExec()">MergeMap + multiple maps</button>-->
+<!--  </div>-->
+<!--  <div class="col-md-3">-->
+<!--    <button class="btn btn-dark" (click)="observableFromPromiseExec()">asyncMergeMap + multiple asyncMaps</button>-->
+<!--  </div>-->
+<!--  <div class="col-md-3">-->
+<!--    <button class="btn btn-dark" (click)="observableFromPromiseExec()">chains + pipe-childrens</button>-->
+<!--  </div>-->
+</div>

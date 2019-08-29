@@ -1,21 +1,36 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h3>
-    {{ title }}
-  </h3>
+  <app-header
+    (showGenericListsEmitter)="onClickShowGenericLists($event)"
+    (showGraphQlEmitter)="onClickShowGraphQl($event)"
+    (showRxjsEmitter)="onClickShowRxjs($event)"
+
+  ></app-header>
+
   <div class="row">
     <div class="col-md-12">
-      -----------
+      -------------------------------------------------------
     </div>
   </div>
-  <div class="row">
+
+  <div class="row" *ngIf="showGenericLists">
     <div class="col-md-12">
-<!--      <app-counter-list></app-counter-list>-->
       <router-outlet></router-outlet>
     </div>
-<!--    <div class="col-md-6">-->
-<!--      <app-relapses></app-relapses>-->
-<!--      <router-outlet></router-outlet>-->
-<!--    </div>-->
+  </div>
+
+  <div class="row" *ngIf="showGraphQL">
+    <div class="col-md-12">
+      <h3 >graphql</h3>
+      <hr>
+      <app-my-first-graph></app-my-first-graph>
+    </div>
+  </div>
+  <div class="row" *ngIf="showRxjs">
+    <div class="col-md-12">
+      <h3 >rx-js</h3>
+      <hr>
+      <app-rxjs-mangling></app-rxjs-mangling>
+    </div>
   </div>
 </div>

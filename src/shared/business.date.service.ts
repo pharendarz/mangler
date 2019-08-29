@@ -5,7 +5,7 @@ import {Apollo} from 'apollo-angular';
 import {ApolloQueryResult} from 'apollo-client';
 import {Observable} from 'rxjs';
 import {distinctUntilChanged, shareReplay} from 'rxjs/operators';
-import {BusinessDate, BusinessDateGQL, Date} from './graphql.types';
+import {BusinessDate, BusinessDateGQL, Date} from '../app/graphql.types';
 
 @Injectable()
 export class BusinessDateService {

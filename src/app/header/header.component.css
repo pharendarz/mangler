@@ -1,0 +1,7 @@
+.nav {
+  position: fixed;
+}
+
+.container-fluid {
+  outline: 2px solid darkslateblue !important;
+}

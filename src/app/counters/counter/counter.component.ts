@@ -24,7 +24,7 @@ export class CounterComponent implements OnInit, OnChanges, DoCheck {
     console.log('COUNTER CHANGED', changes, 'index:::', this.counterIndex);
   }
   ngDoCheck(): void {
-    console.log('hey man');
+    // console.log('hey man');
   }
 
   onClickCounterItem() {
