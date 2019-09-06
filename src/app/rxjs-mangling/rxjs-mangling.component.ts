@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {asyncMap} from '@dbg-riskit/angular-common';
 import {Observable, fromEvent, from, timer, interval, Subscriber, Subscription, of, zip, throwError} from 'rxjs';
 import {
   debounceTime,
@@ -11,8 +12,9 @@ import {
   switchMap,
   takeUntil,
   takeWhile,
-  catchError, mergeMap, retry, first, startWith
+  catchError, mergeMap, retry, first, startWith, shareReplay
 } from 'rxjs/operators';
+import {RandomApisService} from '../random-apis.service';
 
 @Component({
   selector: 'app-rxjs-mangling',
@@ -22,6 +24,7 @@ import {
 
 export class RxjsManglingComponent implements OnInit {
   private wipePrintout = true;
+  public showComponents = true;
 // ### DBG to cover RXJS - OPERATORS:
 /* ========= DONE ==========
 - takeUntil
@@ -51,15 +54,18 @@ export class RxjsManglingComponent implements OnInit {
 - merge map + multiple maps
 - asyncMergeMap + multiple async Maps
  */
-  constructor() { }
+  constructor(private randomApiService: RandomApisService) { }
 
   ngOnInit() {
   }
+
   printRxJS(val) {
     const el = document.createElement('h5');
     el.innerText = val;
-    document.body.appendChild(el);
+    // document.body.appendChild(el);
+    document.getElementById('rxjs-logger').appendChild(el);
   }
+
   wipePrintoutExec() {
     const element = document.getElementsByTagName('h5')
     let index;
@@ -176,7 +182,7 @@ export class RxjsManglingComponent implements OnInit {
   mapObservable() {
     return of(2, 8, 25).pipe(
       tap(previousNum => this.printRxJS('before transform by MAP (tap operator) :::' + previousNum)),
-      map(num => Math.sin(num)),
+      map(num => num * 5),
       tap(transformedNum => this.printRxJS('after transform by MAP (tap operator) :::' + transformedNum))
     );
   }
@@ -309,7 +315,7 @@ export class RxjsManglingComponent implements OnInit {
   shareReplayObservableExec() {
     // [todo] when master graphQl's
   }
-  startWithObservable() {
+  startWithObservableStrings() {
     return of('World', 'Goodbye', 'World!')
       .pipe(
         startWith('HELLO'),
@@ -318,14 +324,170 @@ export class RxjsManglingComponent implements OnInit {
         })
       );
   }
-  startWithObservableExec() {
-    this.printRxJS(`basically it adds something at the beginning of pipe stream`);
-    this.startWithObservable().subscribe(value => this.printRxJS(`startWith add HELLO to accumulative SCAN string::: ${value}`));
+  startWithObservableStringsExec() {
+    this.printRxJS(`basically it adds OBSERVABLE at the beginning of pipe stream with init value : 'HELLO'- SCAN operator works inside like reduce`);
+    this.startWithObservableStrings().subscribe(value => this.printRxJS(`startWith add HELLO to accumulative SCAN string::: ${value}`));
+  }
+  startWithObservableNumbers() {
+    return of(1, 2, 3)
+      .pipe(
+        startWith(9),
+        scan((accumulator, current) => {
+          return accumulator + current;
+        })
+      );
+  }
+  startWithObservableNumbersExec() {
+    this.printRxJS(`basically it adds OBSERVABLE at the beginning of pipe stream with init value : 9 - SCAN operator works inside like reduce`);
+    this.startWithObservableNumbers().subscribe(value =>
+      this.printRxJS(`startWith add numbers [start from 9] to accumulative SCAN string::: ${value}`));
   }
   mergeMapObservable() {
 
   }
   mergeMapObservableExec() {
 
+  }
+  multipleMapObservable() {
+    return of(2, 8, 25).pipe(
+      tap(result => this.printRxJS(`before 1st map => ${result}`)),
+      map(num => num * 5),
+      tap(result => this.printRxJS(`before 2nd map => ${result}`)),
+      map(num2 => num2 * 5)
+    );
+  }
+  multipleMapObservableExec() {
+    this.multipleMapObservable().subscribe(
+      result => this.printRxJS(result)
+    );
+  }
+  multipleMapObservablePlusHttpMergeMap() {
+    return of(2, 8, 25).pipe(
+      tap(result => this.printRxJS(`before 1st SYNC map => ${result}`)),
+      map(num => num * 5),
+      tap(result => this.printRxJS(`after 1st SYNC map => ${result}`)),
+      mergeMap((data) => {
+        this.printRxJS(`inside 2nd ASYNC => ${data} `);
+        const currencyRate = this.randomApiService.getExchangeCurrencies('SDG', 'MYR').pipe(
+          map(mapParameter => {
+            this.printRxJS(`inside 2nd [map] ASYNC => data ::: ${data} mapParameter ::: ${mapParameter}`);
+            return data * mapParameter;
+          })
+        );
+        return currencyRate;
+      }),
+      tap(result => this.printRxJS(`after 2nd ASYNC map => ${result} `)),
+      map((num2) => num2 * 5),
+      tap(result => this.printRxJS(`after 3nd SYNC map => ${result}`)),
+    );
+  }
+  multipleMapObservablePlusHttpMultipleMergeMap() {
+    let counter = 0;
+    return of(2).pipe(
+      startWith(5),
+      tap(result => {
+        counter++;
+        this.printRxJS(`[${counter}] before 1st SYNC map => ${result}`);
+      }),
+      map(num => num * 5),
+      tap(result => this.printRxJS(`[${counter}] after 1st SYNC map => ${result}`)),
+      mergeMap((data) => {
+        this.printRxJS(`[${counter}] inside 2nd ASYNC => ${data} `);
+        const currencyRate = this.randomApiService.getExchangeCurrencies('EUR', 'MYR').pipe(
+          map(mapParameter => {
+            this.printRxJS(`[${counter}] inside 2nd [map] ASYNC => data ::: ${data} mapParameter ::: ${mapParameter}`);
+            return data * mapParameter;
+          })
+        );
+        return currencyRate;
+      }),
+      tap(result => this.printRxJS(`[${counter}] after 2nd ASYNC map => ${result} `)),
+      map((num2) => num2 * 5),
+      tap(result => this.printRxJS(`[${counter}] after 3nd SYNC map => ${result}`)),
+      mergeMap((data) => {
+        this.printRxJS(`[${counter}] inside 4th ASYNC => ${data} `);
+        const currencyRate = this.randomApiService.getExchangeCurrencies('EUR', 'MYR').pipe(
+          map(mapParameter => {
+            this.printRxJS(`[${counter}] inside 4th [map] ASYNC => data ::: ${data} mapParameter ::: ${mapParameter}`);
+            return data * mapParameter;
+          })
+        );
+        return currencyRate;
+      }),
+      // shareReplay(1)
+    );
+  }
+  multipleMapObservablePlusHttpSwitchMap() {
+    return of(2, 8, 25).pipe(
+      tap(result => this.printRxJS(`before 1st SYNC map => ${result}`)),
+      map(num => num * 5),
+      tap(result => this.printRxJS(`after 1st SYNC map => ${result}`)),
+      switchMap((data) => {
+        this.printRxJS(`inside 2nd ASYNC => ${data} `);
+        const currencyRate = this.randomApiService.getExchangeCurrencies('SDG', 'MYR').pipe(
+          map(mapParameter => {
+            this.printRxJS(`inside 2nd [map] ASYNC => data ::: ${data} mapParameter ::: ${mapParameter}`);
+            return data * mapParameter;
+          })
+        );
+        return currencyRate;
+      }),
+      tap(result => this.printRxJS(`after 2nd ASYNC map => ${result} `)),
+      map((num2) => num2 * 5),
+      tap(result => this.printRxJS(`after 3nd SYNC map => ${result}`)),
+    );
+  }
+  multipleMapObservablePlusHttpMergeMapExec() {
+    this.multipleMapObservablePlusHttpMergeMap().subscribe(
+      result => this.printRxJS(result)
+    );
+  }
+  multipleMapObservablePlusHttpSwitchMapExec() {
+    this.multipleMapObservablePlusHttpSwitchMap().subscribe(
+      result => this.printRxJS(result)
+    );
+  }
+  multipleMapObservablePlusHttpMultipleMergeMapExec() {
+    this.multipleMapObservablePlusHttpMultipleMergeMap().subscribe(
+      result => this.printRxJS(result)
+    );
+  }
+  // -------------------------------------------------------------------------------
+  httpWithHeadersFromAPI() {
+    this.randomApiService.getCurrencyList().subscribe(
+      (response: any[]) => {
+        response.forEach(item => {
+          this.printRxJS(item);
+        });
+      }
+    );
+  }
+  httpWithHeadersFromAPIWithParams() {
+    this.randomApiService.getExchangeCurrencies('SDG', 'MYR').subscribe(
+      (response: any) => {
+        // response.forEach(item => {
+          this.printRxJS(response);
+        // });
+      }
+    );
+  }
+  //   const timestamps = this.businessDateService
+  //     .getLiveSnapshots(this.selection.business_date)
+  //     .pipe(
+  //       tap(() => this.logger.info(
+  //         `Timestamps for business date ${this.selection.business_date} collected.`),
+  //         map((snapshots: Timestamps[]) =>
+  //           snapshots.map((snap: Timestamps) => snap.live_timestamp))
+  //       )
+  //     );
+  //
+  //   this.timestampsSubscription = timestamps.subscribe(
+  //     (data: TimestampsResponse) => {
+  // }
+  httpWithHeadersFromAPIExec() {
+    this.httpWithHeadersFromAPI();
+  }
+  httpWithHeadersFromAPIWithParamsExec() {
+    this.httpWithHeadersFromAPIWithParams();
   }
 }
